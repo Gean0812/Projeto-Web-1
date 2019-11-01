@@ -94,7 +94,8 @@ function validarLogin() {
             var obj = JSON.parse(this.responseText);
             console.log(obj);
             console.log("Usuario válido");
-            window.location = "../html/paginainicial.html";
+            sessionStorage.setItem("token",JSON.stringify(obj.token));
+           window.location = "../html/paginainicial.html";
         } else if (this.readyState == 4 && this.status == 400) {
             alert("Usuário ou senha inválidos");
         }
@@ -102,5 +103,6 @@ function validarLogin() {
     xhttp1.open("POST", url1, true);
     xhttp1.setRequestHeader("Content-type", "application/json");
     xhttp1.send(JSON.stringify(dados1));
+ 
 
 }

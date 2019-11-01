@@ -7,7 +7,6 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
     <title>Criar novo Quadro</title>
 </head>
 <body>
@@ -32,14 +31,12 @@
 
     <div class="container">
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                <form id="formCadastro" method="post">
+                <form id="formQuadro" method="post" >
                           <div class="form-group">
-                            <label for="nome"> Quadro:</label>
-                            <input type="text" class="form-control" name="Nome"/> Descriçao
-                            <input type="text" class="form-control" name="Cor" />Data de Entrega
-                            <input type="date" class="form-control" name="Data de Entrega" /> Etiqueta
-                            <input type="color" class="form-control" name="Etiqueta" />
-
+                            <label for="nome"> Nome do Board:</label>
+                            <input id="nomeQuadro" type="text" class="form-control" name="Cor" />
+                             Etiqueta
+                            <input id="colorQuadro" type="color" class="form-control" name="Etiqueta" />
                             <input type="submit" value="Criar Quadro" id="btnQuadro" class="btn btn-primary">
                         </div>
         
@@ -49,6 +46,8 @@
         </div>
 
     </div>
+
+    <script lang="javascript" src="../javascript/paginaInicial.js"> </script>
     
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

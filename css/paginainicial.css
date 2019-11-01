@@ -2,6 +2,10 @@
     color: white;
 }
 
+a{
+    color: white !important;
+}
+
 #borda1 {
    box-sizing: border-box;
 }
