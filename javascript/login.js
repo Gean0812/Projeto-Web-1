@@ -93,8 +93,8 @@ function validarLogin() {
         if (this.readyState == 4 && this.status == 200) {
             var obj = JSON.parse(this.responseText);
             console.log(obj);
-            console.log("Usuario válido");
-            sessionStorage.setItem("token",JSON.stringify(obj.token));
+            console.log("Usuário Válido");
+           sessionStorage.setItem("token",obj.token);
            window.location = "../html/paginainicial.html";
         } else if (this.readyState == 4 && this.status == 400) {
             alert("Usuário ou senha inválidos");
