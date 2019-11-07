@@ -8,7 +8,8 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         crossorigin="anonymous">
-    <title>Criar novo Quadro</title>
+    <link rel="stylesheet" type="text/css" href="../css/quadros.css" />
+    <title>Quadros</title>
 </head>
 
 <body>
@@ -33,29 +34,15 @@
         </div>
     </nav>
 
-    <p>
-        <h1>Criar Novo Quadro</h1>
-    </p>
-
-
-    <!-- Container para criar os quadros! -->
-    <div class="container">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-            <form id="formQuadro" method="post">
-                <div class="form-group">
-                    <label for="nome"> Nome do Board:</label>
-                    <input id="nomeQuadro" type="text" class="form-control" name="Cor" /> Etiqueta
-                    <input id="colorQuadro" type="color" class="form-control" name="Etiqueta" />
-                    <input type="submit" value="Criar Quadro" id="btnQuadro" class="btn btn-primary">
-                </div>
-
-            </form>
-
-
+    <div class="container-fluid mh-80 justify-content-center">
+        <div class="card">
+            <button id="novoNome" class=" btn btn-primary">Novo Nome</button>
+            <button id="novaCor" class=" btn btn-primary">Nova Cor</button>
         </div>
-
-
     </div>
+
+
+
 
 
 

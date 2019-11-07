@@ -94,7 +94,7 @@ function validarLogin() {
             var obj = JSON.parse(this.responseText);
             console.log(obj);
             console.log("Usuário Válido");
-           sessionStorage.setItem("token",obj.token);
+           sessionStorage.setItem("token",JSON.stringify(obj.token));
            window.location = "../html/paginainicial.html";
         } else if (this.readyState == 4 && this.status == 400) {
             alert("Usuário ou senha inválidos");

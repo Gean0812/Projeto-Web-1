@@ -9,3 +9,7 @@ a{
 #borda1 {
    box-sizing: border-box;
 }
+
+.myCard{
+    border: none !important;
+}
