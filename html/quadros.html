@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../css/quadros.css" />
-    <title>Quadros</title>
+    <title>Trellx</title>
 </head>
 
 <body>
 
     <!--Barra de Navegação -->
     <nav id="barraDeNavegacao" class="navbar navbar-expand-lg navbar-light bg-primary" style="color: white;">
-        <a class="navbar-brand" href="../imagens/logo-agenda-png-3.png">
+        <a class="navbar-brand" href="../html/paginaInicial.html">
             <img src="../imagens/logo-agenda-png-3.png" width="30" height="30" class="d-inline-block align-top" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
@@ -35,16 +35,25 @@
     </nav>
 
     <div class="container-fluid mh-80 justify-content-center">
-        <div class="card">
-            <button id="novoNome" class=" btn btn-primary">Novo Nome</button>
-            <button id="novaCor" class=" btn btn-primary">Nova Cor</button>
+        <div id="cardQuadro" class="card">
+            <button id="novoNome" class=" btn btn-primary">Renomear</button>
+            <button id="novaCor" class=" btn btn-primary">Alterar Cor</button>
+            <button id="novaLista" class="btn btn-primary">Nova Lista</button>
         </div>
     </div>
 
 
+    <div id="criarListas" class="w-50">
+        <form id="formNovaLista" method="post" class="form-group">     
+            <input id="listaDesc" type="text" name="" id="listaNome">
+            <button id="enviarLista" class="btn btn-success" type="submit">Enviar</button>
+            <button id="cancelarLista" class="close">X</button>
+        </form>
+
+    </div>
 
 
-
+    <script lang="javascript" src="../javascript/quadros.js"> </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
