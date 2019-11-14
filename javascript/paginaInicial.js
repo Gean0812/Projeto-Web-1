@@ -1,4 +1,3 @@
-
 //CLASSE QUADRO
 class Quadro {
     constructor(name, color, id) {
@@ -8,12 +7,12 @@ class Quadro {
     }
     iniciar() {
         let div = document.createElement("div");
-        div.setAttribute("class", "container-fluid mh-100");
-        div.setAttribute("id", " ");
+        div.setAttribute("class", "card mh-30 col-3");
+        div.setAttribute("id", "div12 ");
 
         let div2 = document.createElement("div2");
         div2.setAttribute("class", "card myCard");
-        div2.setAttribute("style", "width: 15rem;");
+        div2.setAttribute("style", "");
         div2.setAttribute("id", this.id);
 
         let spam = document.createElement("span");
@@ -49,13 +48,17 @@ class Quadro {
 }
 
 
-//Variáveis do Quadro
+//===============================================================================================================
+
+//VARIÁVEIS DO QUADRO
 var nomeQ = document.getElementById("nomeQuadro");
 var colorQ = document.getElementById("colorQuadro");
 var criarQuadro = document.getElementById("formQuadro");
 var listaDeQuadros = document.getElementById("listaDeQuadros");
 var quadrosApi;
 
+
+//==================================================================================================================
 
 //EVENT LISTENNERS
 criarQuadro.addEventListener("onsubmit", function (e) {
@@ -67,17 +70,14 @@ listaDeQuadros.addEventListener("click", function (e) {
     var cadastroQuadros = document.getElementById("cadastroQuadros").style.display = "block";
 })
 
-// novaLista.addEventListener("onsubmit",function(e){
-//     e.preventDefault();
-
-//     criarList();
-// })
+//===================================================================================================================
 
 
 //PEGANDO O TOKEN
-//SE ESTIVER COMO ESTÁ ABAIXO E DER ERRO NA FUNÇÃO QUE PASSA O TOKEN PODE SER PQ ESTÁ COM ASPAS,CASO ESTEJA CO MASPAS TEM QUE DAR O PARSE
+//SE ESTIVER COMO ESTÁ ABAIXO E DER ERRO NA FUNÇÃO QUE PASSA O TOKEN PODE SER PQ ESTÁ COM ASPAS,CASO ESTEJA COM ASPAS TEM QUE DAR O PARSE
 console.log(sessionStorage.getItem("token"));
 var token = JSON.parse(sessionStorage.getItem("token"));
+console.log(token);
 
 criarQuadro.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -87,6 +87,8 @@ criarQuadro.addEventListener("submit", function (e) {
 })
 
 
+
+// =========================================================================================================
 
 
 //FUNÇÕES DA PÁGINA INICIAL
@@ -134,6 +136,7 @@ function listarQuadros() {
     var xhttp3 = new XMLHttpRequest();
     xhttp3.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+            console.log(token);
             quadrosApi = JSON.parse(this.responseText);
             console.log(quadrosApi);
 
