@@ -5,17 +5,22 @@ class Lista {
         this.id = id;
     }
     iniciar() {
+
+      //  let td = document.createElement("td");
+
         let div = document.createElement("div");
-        div.setAttribute("class", "card mh-50 col-3");
+        div.setAttribute("class", "card mh-50 col-3 p-0 bg-secondary m-2");
         div.setAttribute("id", " ");
 
         let div2 = document.createElement("div2");
-        div2.setAttribute("class", "card myCard");
+        div2.setAttribute("class", "card myCard p-0 spn-list");
         div2.setAttribute("style", "width: 15rem;");
         div2.setAttribute("id", this.id);
+        
+
 
         let spam = document.createElement("span");
-        spam.setAttribute("class", "border:none bg-secondary");
+       // spam.setAttribute("class", "spn-list");
 
 
 
@@ -26,6 +31,7 @@ class Lista {
         spam.appendChild(texto);
         div2.appendChild(spam);
         div.appendChild(div2);
+       // td.appendChild(div);
 
         return div;
 
@@ -43,7 +49,7 @@ var listaDesc = document.getElementById("listaDesc");
 var btnEnviar = document.getElementById("enviarLista");
 var exibirLista = document.getElementById("lugar-de-exibir-listas");
 var arrayDeListas;
-var quadroInfo = sessionStorage.getItem("quadroInfo");
+var quadroInfo = JSON.parse(sessionStorage.getItem("quadroInfo"));
 var token = JSON.parse(sessionStorage.getItem("token"));
 
 //=======================================================================================================
@@ -99,7 +105,7 @@ function criarList() {
             alert("lista criada");
             
 
-            let novaaLista = new Lista(obj.name, obj.id,obj.token).iniciar();
+            let novaaLista = new Lista(obj.name, obj.id).iniciar();
            
 
             exibirLista.appendChild(novaaLista);
@@ -133,7 +139,7 @@ function exibirListas() {
             console.log(arrayDeListas);
 
             for (let index = 0; index < arrayDeListas.length; index++) {
-                let novLista = new Lista(arrayDeListas[index].listName, arrayDeListas[index].id).iniciar();
+                let novLista = new Lista(arrayDeListas[index].name,arrayDeListas[index].id).iniciar();
                 exibirLista.appendChild(novLista);
 
             }

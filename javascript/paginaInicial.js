@@ -7,7 +7,7 @@ class Quadro {
     }
     iniciar() {
         let div = document.createElement("div");
-        div.setAttribute("class", "card mh-30 col-3");
+        div.setAttribute("class", "card mh-30 col-3","style: width 40px;");
         div.setAttribute("id", "div12 ");
 
         let div2 = document.createElement("div2");

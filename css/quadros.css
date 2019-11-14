@@ -13,3 +13,13 @@ a{
 #criarListas{
     display: none;
 }
+
+.card{
+    width: 20px;
+    height: 30px;
+}
+
+.spn-list{
+    background-color: transparent;
+    border: none;
+}
