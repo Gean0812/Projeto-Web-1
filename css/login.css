@@ -14,16 +14,14 @@
 }
 
 .bg {
-    background-image: url("../imagens/agenda-diaria.jpg");
     height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;   
+background-color:white;
 
 }
 
 #container{
     padding-top: 115px;
+    
 }
 
 #btnCadastrar{
@@ -39,6 +37,15 @@
 
     margin-left: 500px;
     margin-top: 50px;
+}
+
+.h1{
+    word-wrap: break-word;
+     -webkit-hyphens: auto;
+     -moz-hyphens: auto;
+     -ms-hyphens: auto;
+     -o-hyphens: auto;
+     hyphens: auto;
 }
 
 
