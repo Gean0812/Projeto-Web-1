@@ -12,7 +12,7 @@
     <title>Trellx</title>
 </head>
 
-<body>
+<body onload="exibirListas()">
 
     <!--Barra de Navegação -->
     <nav id="barraDeNavegacao" class="navbar navbar-expand-lg navbar-light bg-primary" style="color: white;">
@@ -28,7 +28,6 @@
                 <a class="nav-item nav-link active" href="../html/paginaInicial.html">Início
                     <span class="sr-only">(current)</span>
                 </a>
-                <a class="nav-item nav-link" href="#">Quadros</a>
                 <a class="nav-item nav-link" href="#">Logout</a>
             </div>
         </div>
@@ -45,11 +44,21 @@
 
     <div id="criarListas" class="w-50">
         <form id="formNovaLista" method="post" class="form-group">     
-            <input id="listaDesc" type="text" name="" id="listaNome">
+            <input id="listaDesc" type="text" name="" >
             <button id="enviarLista" class="btn btn-success" type="submit">Enviar</button>
             <button id="cancelarLista" class="close">X</button>
         </form>
 
+    </div>
+
+    <div id="lugar-de-exibir-listas" class="container-fluid mh-80 ">
+        <div id="div" class="card" style="width: 15rem;">
+            <span class="border border-dark bg-secondary">
+
+                
+            </span>
+
+        </div>
     </div>
 
 
