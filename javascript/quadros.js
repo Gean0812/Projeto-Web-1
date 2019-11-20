@@ -51,6 +51,7 @@ var exibirLista = document.getElementById("lugar-de-exibir-listas");
 var arrayDeListas;
 var quadroInfo = JSON.parse(sessionStorage.getItem("quadroInfo"));
 var token = JSON.parse(sessionStorage.getItem("token"));
+var btnRemoverQuadro = document.getElementById("removerQuadro");
 
 //=======================================================================================================
 
@@ -79,6 +80,11 @@ formLista.addEventListener("onsubmit",function(e){
 formLista.addEventListener("submit", function (e) {
     e.preventDefault();
     criarList();
+})
+
+btnRemoverQuadro.addEventListener("click",function(e){
+    e.preventDefault();
+    removeQuadro();
 })
 
 
@@ -151,5 +157,43 @@ function exibirListas() {
     xhttp.open("GET", url, true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify(url));
+
+}
+
+
+//FUNÇAO PARA DELETAR UM QUADRO
+
+function removeQuadro (){
+
+    let remov = {
+        "board_id" : quadroInfo.id,
+        "token" : token
+    }
+    let remover = confirm("Deseja excluir o board?");
+            
+    if(remover == true){
+
+        var url2 = "https://tads-trello.herokuapp.com/api/trello/boards/delete";
+        var xhttp2 = new XMLHttpRequest();
+        xhttp2.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("quadro removido");
+                window.location = "../html/paginainicial.html";
+    
+    
+    
+    
+            } else if (this.readyState == 4 && this.status == 400) {
+               
+            }
+        }
+        xhttp2.open("DELETE", url2, true);
+        xhttp2.setRequestHeader("Content-type", "application/json");
+        xhttp2.send(JSON.stringify(remov));
+
+
+
+    }
+
 
 }

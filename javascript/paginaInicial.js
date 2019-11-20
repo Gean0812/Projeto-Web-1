@@ -7,11 +7,11 @@ class Quadro {
     }
     iniciar() {
         let div = document.createElement("div");
-        div.setAttribute("class", "card mh-30 col-3","style: width 40px;");
+        div.setAttribute("class", "card mh-30 col-3  p-0 m-2","style: width 40px;");
         div.setAttribute("id", "div12 ");
 
         let div2 = document.createElement("div2");
-        div2.setAttribute("class", "card myCard");
+        div2.setAttribute("class", "card myCard mh-30 col-3  p-0 m-2 spn-list");
         div2.setAttribute("style", "");
         div2.setAttribute("id", this.id);
 
@@ -55,6 +55,7 @@ var nomeQ = document.getElementById("nomeQuadro");
 var colorQ = document.getElementById("colorQuadro");
 var criarQuadro = document.getElementById("formQuadro");
 var listaDeQuadros = document.getElementById("listaDeQuadros");
+var logout = document.getElementById("btnLogout");
 var quadrosApi;
 
 
@@ -69,6 +70,13 @@ listaDeQuadros.addEventListener("click", function (e) {
     e.preventDefault();
     var cadastroQuadros = document.getElementById("cadastroQuadros").style.display = "block";
 })
+
+//sair da Conta
+logout.addEventListener("click", function(){
+    sessionStorage.removeItem("token");
+    localStorage.removeItem("token");
+    window.location = "../html/index.html";
+});
 
 //===================================================================================================================
 
@@ -157,3 +165,6 @@ function listarQuadros() {
 
 
 }
+
+
+
