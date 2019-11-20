@@ -42,9 +42,18 @@ a{
 
  #div {
      display: block !important;
+     border: none;
  }
 
  .spn-list{
     background-color: transparent;
+    border: none;
+}
+
+#spanNome{
+    border: none;
+}
+
+#aNome{
     border: none;
 }
