@@ -43,3 +43,8 @@ a{
  #div {
      display: block !important;
  }
+
+ .spn-list{
+    background-color: transparent;
+    border: none;
+}
