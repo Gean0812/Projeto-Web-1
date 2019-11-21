@@ -28,6 +28,16 @@ class Lista {
        btnCard.setAttribute("id"," ");
        btnCard.setAttribute("data-toggle", "modal");
        btnCard.setAttribute("data-target","#modalCards");
+       btnCard.addEventListener("click",()=> {
+           let listaInfo = {
+               "list_id": this.id
+               
+
+           }
+           sessionStorage.setItem("listaInfo",JSON.stringify(listaInfo));
+        
+           
+       })
 
         let texto = document.createTextNode(this.listName);
         let textoCard = document.createTextNode("+add novo card");
@@ -69,6 +79,7 @@ var btnEnviarCard = document.getElementById("enviarCard");
 var formCard = document.getElementById("formNovoCard");
 var cardDesc = document.getElementById("cardDesc");
 var cardData = document.getElementById("cardData");
+var listaInfo = JSON.parse(sessionStorage.getItem("listaInfo"));
 
 //=======================================================================================================
 
@@ -217,10 +228,11 @@ function removeQuadro (){
         "name": cardDesc.value,
         "data": cardData.value,
         "token" : token,
-        "list_id" : id
+        "list_id" : listaInfo.list_id
 
     }
 
+    console.log(listaInfo.list_id);
     console.log(cartao);
 
 
