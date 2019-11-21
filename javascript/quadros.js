@@ -20,18 +20,28 @@ class Lista {
 
 
         let spam = document.createElement("span");
-       // spam.setAttribute("class", "spn-list");
 
 
+       let btnCard = document.createElement("div");
+       btnCard.setAttribute("class","card text-white bg-info mb-3");
+       btnCard.setAttribute("style","width: 15rem;");
+       btnCard.setAttribute("id"," ");
+       btnCard.setAttribute("data-toggle", "modal");
+       btnCard.setAttribute("data-target","#modalCards");
 
         let texto = document.createTextNode(this.listName);
+        let textoCard = document.createTextNode("+add novo card");
 
 
 
         spam.appendChild(texto);
+        btnCard.appendChild(textoCard);
         div2.appendChild(spam);
         div.appendChild(div2);
-       // td.appendChild(div);
+        div.appendChild(btnCard);
+
+       
+
 
         return div;
 
@@ -53,29 +63,27 @@ var quadroInfo = JSON.parse(sessionStorage.getItem("quadroInfo"));
 var token = JSON.parse(sessionStorage.getItem("token"));
 var btnRemoverQuadro = document.getElementById("removerQuadro");
 
+//VARIÁVEIS DO CARD
+
+var btnEnviarCard = document.getElementById("enviarCard");
+var formCard = document.getElementById("formNovoCard");
+var cardDesc = document.getElementById("cardDesc");
+var cardData = document.getElementById("cardData");
+
 //=======================================================================================================
 
 //EVENT LISTENNERS
-novaLista.addEventListener("click", function () {
+// novaLista.addEventListener("click", function () {
 
-    exibirForm.style.display = "block";
+//     exibirForm.style.display = "block";
 
 
-})
+// })
 
-btnCancelar.addEventListener("click", function (e) {
-    e.preventDefault();
-    exibirForm.style.display = "none";
-})
-
-btnEnviar.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-})
-
-formLista.addEventListener("onsubmit",function(e){
-    e.preventDefault();
-})
+// btnCancelar.addEventListener("click", function (e) {
+//     e.preventDefault();
+//     exibirForm.style.display = "none";
+// })
 
 formLista.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -85,6 +93,11 @@ formLista.addEventListener("submit", function (e) {
 btnRemoverQuadro.addEventListener("click",function(e){
     e.preventDefault();
     removeQuadro();
+})
+
+formCard.addEventListener("submit",function(e){
+    e.preventDefault();
+    criarCard();
 })
 
 
@@ -97,7 +110,7 @@ function criarList() {
     var list = {
         "name": document.getElementById("listaDesc").value,
         "token": token,
-        "board_id": JSON.parse(sessionStorage.getItem("quadroInfo")).id
+        "board_id": quadroInfo.id
 
     }
     console.log(list);
@@ -198,6 +211,36 @@ function removeQuadro (){
 
 }
 
-function mudaCor(){
+ function criarCard(){
+
+    let cartao = {
+        "name": cardDesc.value,
+        "data": cardData.value,
+        "token" : token,
+        "list_id" : id
+
+    }
+
+    console.log(cartao);
+
+
+    var url = "https://tads-trello.herokuapp.com/api/trello/cards/new"
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(url);
+            console.log(quadroInfo);
+            var obj2 = JSON.parse(this.responseText);
+           
+            alert("Card criado");
+
+
+        } else if (this.readyState == 4 && this.status == 400) {
+            alert("Erro");
+        }
+    }
+    xhttp.open("GET", url, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(cartao));
     
 }

@@ -11,12 +11,12 @@ a{
 }
 
 #criarListas{
-    display: none;
+
 }
 
 .card{
     width: 20px;
-    height: 30px;
+
 }
 
 .spn-list{
@@ -27,3 +27,4 @@ a{
 .row{
     color: white;
 }
+
