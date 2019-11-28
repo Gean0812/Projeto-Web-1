@@ -29,15 +29,12 @@ class Lista {
        btnCard.setAttribute("data-toggle", "modal");
        btnCard.setAttribute("data-target","#modalCards");
        btnCard.addEventListener("click",()=> {
-           let listaInfo = {
-               "list_id": this.id
-               
-
-           }
+           let listaInfo = this.id;
            sessionStorage.setItem("listaInfo",JSON.stringify(listaInfo));
+           console.log(listaInfo);
         
            
-       })
+        })
 
         let texto = document.createTextNode(this.listName);
         let textoCard = document.createTextNode("+add novo card");
@@ -52,7 +49,7 @@ class Lista {
 
        
 
-
+       exibirCard(this.id,div2);
         return div;
 
     }
@@ -72,6 +69,7 @@ var arrayDeListas;
 var quadroInfo = JSON.parse(sessionStorage.getItem("quadroInfo"));
 var token = JSON.parse(sessionStorage.getItem("token"));
 var btnRemoverQuadro = document.getElementById("removerQuadro");
+var btnNovaCor = document.getElementById("novaCor");
 
 //VARIÁVEIS DO CARD
 
@@ -79,7 +77,8 @@ var btnEnviarCard = document.getElementById("enviarCard");
 var formCard = document.getElementById("formNovoCard");
 var cardDesc = document.getElementById("cardDesc");
 var cardData = document.getElementById("cardData");
-var listaInfo = JSON.parse(sessionStorage.getItem("listaInfo"));
+var listaInfo;
+var arrayDeCards;
 
 //=======================================================================================================
 
@@ -109,6 +108,11 @@ btnRemoverQuadro.addEventListener("click",function(e){
 formCard.addEventListener("submit",function(e){
     e.preventDefault();
     criarCard();
+})
+
+btnNovaCor.addEventListener("submit",function(e){
+    e.preventDefault();
+    mudarCor();
 })
 
 
@@ -223,16 +227,16 @@ function removeQuadro (){
 }
 
  function criarCard(){
-
+    listaInfo = JSON.parse(sessionStorage.getItem("listaInfo"));
+    console.log("card ,"+listaInfo)
     let cartao = {
         "name": cardDesc.value,
         "data": cardData.value,
         "token" : token,
-        "list_id" : listaInfo.list_id
+        "list_id" : listaInfo
 
     }
 
-    console.log(listaInfo.list_id);
     console.log(cartao);
 
 
@@ -243,6 +247,18 @@ function removeQuadro (){
             console.log(url);
             console.log(quadroInfo);
             var obj2 = JSON.parse(this.responseText);
+
+            let div2 = document.getElementById(obj2.trelloListId);
+            let novoCard = document.createElement("div");
+            novoCard.setAttribute("class","card text-white bg-dark mb-3"); 
+            novoCard.setAttribute("style","width: 15rem;");
+            novoCard.setAttribute("id", obj2.id);
+            
+            var spamCard = document.createElement("span");
+            spamCard.innerHTML=obj2.name;
+
+            novoCard.appendChild(spamCard);
+            div2.insertAdjacentElement("afterend",novoCard);
            
             alert("Card criado");
 
@@ -251,8 +267,75 @@ function removeQuadro (){
             alert("Erro");
         }
     }
-    xhttp.open("GET", url, true);
+    xhttp.open("POST", url, true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify(cartao));
     
 }
+
+function exibirCard(listaInfo,div2){
+    var url = "https://tads-trello.herokuapp.com/api/trello/cards/"+ token +"/list/" +listaInfo;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+
+            arrayDeCards = JSON.parse(this.responseText);
+            console.log(arrayDeCards);
+
+            for (let index = 0; index < arrayDeCards.length; index++) {
+                let novoCard = document.createElement("div");
+                novoCard.setAttribute("class","card text-white bg-dark mb-3"); 
+                novoCard.setAttribute("style","width: 15rem;");
+                novoCard.setAttribute("id", arrayDeCards[index].id);
+                
+                var spamCard = document.createElement("span");
+                spamCard.innerHTML= arrayDeCards[index].name;
+
+                novoCard.appendChild(spamCard);
+                div2.insertAdjacentElement("afterend",novoCard);
+
+                
+               
+
+            }
+
+        } else if (this.readyState == 4 && this.status == 400) {
+            alert("Erro");
+        }
+    }
+    xhttp.open("GET", url, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(url));
+
+}
+
+
+function mudarCor (){
+
+    let novaCor = {
+        "board_id" : quadroInfo.id,
+        "color" : btnNovaCor.value,
+        "token": token
+
+    }
+
+    console.log(novaCor);
+
+    var url = "https://tads-trello.herokuapp.com/api/trello/boards/newcolor";
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+
+            window.location = "paginainicial.html";
+
+
+        } else if (this.readyState == 4 && this.status == 400) {
+            alert("Erro");
+        }
+    }
+    xhttp.open("PATCH", url, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(novaCor));
+}
+
