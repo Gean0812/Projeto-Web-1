@@ -325,4 +325,32 @@ function exibirCard(element, card){
     novoCard.appendChild(spamCard);
     element.insertAdjacentElement("afterend",novoCard);
 
+    novoCard.setAttribute("data-toggle", "modal");
+    novoCard.setAttribute("data-target","#cardDentro");
+
+    novoCard.addEventListener("click",function(){
+        alterarModalCard(card);
+
+
+    });
+
+}
+
+
+function alterarModalCard(card){
+
+    var modalCard = document.getElementById("cardDentro");
+    modalCard.setAttribute("idDoCard",card.id);
+
+    
+    var tituloCard = document.getElementById("tituloCard");
+    tituloCard.innerText = card.name;
+
+    var dataCard = document.getElementById("exibirDataAtual");
+    dataCard.innerText ="Data do Card: " + card.data;
+
+
+    console.log(card);
+
+
 }
