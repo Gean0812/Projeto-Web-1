@@ -31,7 +31,7 @@ class Lista {
        btnCard.addEventListener("click",()=> {
            let listaInfo = this.id;
            sessionStorage.setItem("listaInfo",JSON.stringify(listaInfo));
-           console.log(listaInfo);
+          
         
            
         })
@@ -49,7 +49,7 @@ class Lista {
 
        
 
-       exibirCard(this.id,div2);
+       buscarCards(this.id,div2);
         return div;
 
     }
@@ -69,7 +69,9 @@ var arrayDeListas;
 var quadroInfo = JSON.parse(sessionStorage.getItem("quadroInfo"));
 var token = JSON.parse(sessionStorage.getItem("token"));
 var btnRemoverQuadro = document.getElementById("removerQuadro");
-var btnNovaCor = document.getElementById("novaCor");
+var formMudaCor = document.getElementById("formNovaCor");
+var novaCor = document.getElementById("colorQuadro");
+
 
 //VARIÁVEIS DO CARD
 
@@ -109,8 +111,7 @@ formCard.addEventListener("submit",function(e){
     e.preventDefault();
     criarCard();
 })
-
-btnNovaCor.addEventListener("submit",function(e){
+ formMudaCor.addEventListener("submit",function(e){
     e.preventDefault();
     mudarCor();
 })
@@ -128,7 +129,7 @@ function criarList() {
         "board_id": quadroInfo.id
 
     }
-    console.log(list);
+
 
     var url4 = "https://tads-trello.herokuapp.com/api/trello/lists/new";
     var xhttp4 = new XMLHttpRequest();
@@ -167,10 +168,7 @@ function exibirListas() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(url);
-            console.log(quadroInfo);
             arrayDeListas = JSON.parse(this.responseText);
-            console.log(arrayDeListas);
 
             for (let index = 0; index < arrayDeListas.length; index++) {
                 let novLista = new Lista(arrayDeListas[index].name,arrayDeListas[index].id).iniciar();
@@ -237,7 +235,6 @@ function removeQuadro (){
 
     }
 
-    console.log(cartao);
 
 
     var url = "https://tads-trello.herokuapp.com/api/trello/cards/new"
@@ -248,18 +245,7 @@ function removeQuadro (){
             console.log(quadroInfo);
             var obj2 = JSON.parse(this.responseText);
 
-            let div2 = document.getElementById(obj2.trelloListId);
-            let novoCard = document.createElement("div");
-            novoCard.setAttribute("class","card text-white bg-dark mb-3"); 
-            novoCard.setAttribute("style","width: 15rem;");
-            novoCard.setAttribute("id", obj2.id);
-            
-            var spamCard = document.createElement("span");
-            spamCard.innerHTML=obj2.name;
-
-            novoCard.appendChild(spamCard);
-            div2.insertAdjacentElement("afterend",novoCard);
-           
+            exibirCard(document.getElementById(obj2.trelloListId), obj2);
             alert("Card criado");
 
 
@@ -273,30 +259,16 @@ function removeQuadro (){
     
 }
 
-function exibirCard(listaInfo,div2){
+function buscarCards(listaInfo,div2){
     var url = "https://tads-trello.herokuapp.com/api/trello/cards/"+ token +"/list/" +listaInfo;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
 
             arrayDeCards = JSON.parse(this.responseText);
-            console.log(arrayDeCards);
 
             for (let index = 0; index < arrayDeCards.length; index++) {
-                let novoCard = document.createElement("div");
-                novoCard.setAttribute("class","card text-white bg-dark mb-3"); 
-                novoCard.setAttribute("style","width: 15rem;");
-                novoCard.setAttribute("id", arrayDeCards[index].id);
-                
-                var spamCard = document.createElement("span");
-                spamCard.innerHTML= arrayDeCards[index].name;
-
-                novoCard.appendChild(spamCard);
-                div2.insertAdjacentElement("afterend",novoCard);
-
-                
-               
-
+                exibirCard(div2, arrayDeCards[index])
             }
 
         } else if (this.readyState == 4 && this.status == 400) {
@@ -312,14 +284,14 @@ function exibirCard(listaInfo,div2){
 
 function mudarCor (){
 
-    let novaCor = {
+    let newCor = {
         "board_id" : quadroInfo.id,
-        "color" : btnNovaCor.value,
+        "color" : novaCor.value,
         "token": token
 
     }
 
-    console.log(novaCor);
+    console.log(newCor);
 
     var url = "https://tads-trello.herokuapp.com/api/trello/boards/newcolor";
     var xhttp = new XMLHttpRequest();
@@ -336,6 +308,21 @@ function mudarCor (){
     }
     xhttp.open("PATCH", url, true);
     xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify(novaCor));
+    xhttp.send(JSON.stringify(newCor));
 }
 
+
+function exibirCard(element, card){
+
+    let novoCard = document.createElement("div");
+    novoCard.setAttribute("class","card text-white bg-dark mb-3"); 
+    novoCard.setAttribute("style","width: 15rem;");
+    novoCard.setAttribute("id", card.id);
+    
+    var spamCard = document.createElement("span");
+    spamCard.innerHTML= card.name;
+
+    novoCard.appendChild(spamCard);
+    element.insertAdjacentElement("afterend",novoCard);
+
+}
