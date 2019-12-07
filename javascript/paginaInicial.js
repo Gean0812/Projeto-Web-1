@@ -62,6 +62,9 @@ var quadrosApi;
 //==================================================================================================================
 
 //EVENT LISTENNERS
+criarQuadro.addEventListener("onsubmit", function (e) {
+    e.preventDefault();
+})
 
 listaDeQuadros.addEventListener("click", function (e) {
     e.preventDefault();
@@ -81,7 +84,7 @@ logout.addEventListener("click", function(){
 //PEGANDO O TOKEN
 //SE ESTIVER COMO ESTÁ ABAIXO E DER ERRO NA FUNÇÃO QUE PASSA O TOKEN PODE SER PQ ESTÁ COM ASPAS,CASO ESTEJA COM ASPAS TEM QUE DAR O PARSE
 console.log(sessionStorage.getItem("token"));
-const token = JSON.parse(sessionStorage.getItem("token"));
+var token = JSON.parse(sessionStorage.getItem("token"));
 console.log(token);
 
 criarQuadro.addEventListener("submit", function (e) {
@@ -104,7 +107,7 @@ function novoQuadro() {
     var dados2 = {
         "name": document.getElementById("nomeQuadro").value,
         "color": document.getElementById("colorQuadro").value,
-        "token": token
+        "token": sessionStorage.getItem("token")
     }
     console.log(dados2);
     var url2 = "https://tads-trello.herokuapp.com/api/trello/boards/new";

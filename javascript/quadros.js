@@ -20,6 +20,8 @@ class Lista {
 
 
         let spam = document.createElement("span");
+        spam.setAttribute("data-toggle", "modal");
+        spam.setAttribute("data-target","#optListas");
 
 
        let btnCard = document.createElement("div");
@@ -71,6 +73,8 @@ var token = JSON.parse(sessionStorage.getItem("token"));
 var btnRemoverQuadro = document.getElementById("removerQuadro");
 var formMudaCor = document.getElementById("formNovaCor");
 var novaCor = document.getElementById("colorQuadro");
+var novoNomeBoard = document.getElementById("novoNomeQuadro");
+var formNovoNome = document.getElementById("formNovoNome");
 
 
 //VARIÁVEIS DO CARD
@@ -115,6 +119,11 @@ formCard.addEventListener("submit",function(e){
     e.preventDefault();
     mudarCor();
 })
+
+ formNovoNome.addEventListener("submit",function(e){
+     e.preventDefault();
+     renomearQuadro();
+ })   
 
 
 //==============================================================================================
@@ -223,6 +232,45 @@ function removeQuadro (){
 
 
 }
+
+
+function renomearQuadro (){
+    
+    
+    let newNome = {
+        "board_id" : quadroInfo.id,
+        "name" : novoNomeBoard.value,
+        "token": token
+
+    }
+
+    console.log(newNome);
+
+    var url = "https://tads-trello.herokuapp.com/api/trello/boards/rename";
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+
+            window.location = "paginainicial.html";
+
+
+        } else if (this.readyState == 4 && this.status == 400) {
+            alert("Erro");
+        }
+    }
+    xhttp.open("PATCH", url, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(newNome));
+} 
+
+
+
+
+
+
+
+
 
  function criarCard(){
     listaInfo = JSON.parse(sessionStorage.getItem("listaInfo"));
