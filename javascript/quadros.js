@@ -22,6 +22,13 @@ class Lista {
         let spam = document.createElement("span");
         spam.setAttribute("data-toggle", "modal");
         spam.setAttribute("data-target","#optListas");
+        spam.addEventListener("click",()=> {
+            let listaInfo = this.id;
+            sessionStorage.setItem("listaInfo",JSON.stringify(listaInfo));
+           
+         
+            
+         })
 
 
        let btnCard = document.createElement("div");
@@ -75,6 +82,10 @@ var formMudaCor = document.getElementById("formNovaCor");
 var novaCor = document.getElementById("colorQuadro");
 var novoNomeBoard = document.getElementById("novoNomeQuadro");
 var formNovoNome = document.getElementById("formNovoNome");
+var formRenomearLista = document.getElementById("formRenomearLista");
+var formExcluirLista = document.getElementById("formExcluirLista"); 
+var novoListaNome = document.getElementById("novoNomeLista");
+var comentarioCard = document.getElementById("comentarioCard");
 
 
 //VARIÁVEIS DO CARD
@@ -123,7 +134,17 @@ formCard.addEventListener("submit",function(e){
  formNovoNome.addEventListener("submit",function(e){
      e.preventDefault();
      renomearQuadro();
- })   
+ })
+ 
+ formRenomearLista.addEventListener("submit",function(e){
+     e.preventDefault();
+     renomearLista();
+ })
+
+ formExcluirLista.addEventListener("submit",function(e){
+     e.preventDefault();
+     removerLista();
+ })
 
 
 //==============================================================================================
@@ -192,6 +213,75 @@ function exibirListas() {
     xhttp.open("GET", url, true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify(url));
+
+}
+
+function renomearLista(){
+
+    let newNomeLista = {
+        "list_id" : JSON.parse(sessionStorage.getItem("listaInfo")),
+        "name" : novoNomeLista.value,
+        "token": token
+
+    }
+
+    console.log(newNomeLista);
+
+
+    var url = "https://tads-trello.herokuapp.com/api/trello/lists/rename";
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+
+           alert("nome alterado");
+           window.location.reload();
+
+
+        } else if (this.readyState == 4 && this.status == 400) {
+            alert("Erro");
+        }
+    }
+    xhttp.open("PATCH", url, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(newNomeLista));
+
+
+}
+
+
+function removerLista(){
+
+    let removeLista = {
+        "list_id" : JSON.parse(sessionStorage.getItem("listaInfo")),
+        "token" : token
+    }
+    let removerLista = confirm("Deseja excluir a lista?");
+            
+    if(removerLista == true){
+
+        var url2 = "https://tads-trello.herokuapp.com/api/trello/lists/delete";
+        var xhttp2 = new XMLHttpRequest();
+        xhttp2.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("lista removida");
+                window.location.reload();
+    
+    
+    
+    
+            } else if (this.readyState == 4 && this.status == 400) {
+               
+            }
+        }
+        xhttp2.open("DELETE", url2, true);
+        xhttp2.setRequestHeader("Content-type", "application/json");
+        xhttp2.send(JSON.stringify(removeLista));
+
+
+
+    }
+
 
 }
 
@@ -400,5 +490,38 @@ function alterarModalCard(card){
 
     console.log(card);
 
+
+}
+
+function inserirComentario(){
+
+      let novoComentario = {
+        "card_id" : modalCard.id,
+        "comment" : comentarioCard.value,
+        "token": token
+
+      }
+
+      console.log(novoComentario);
+
+
+
+    var url4 = "https://tads-trello.herokuapp.com/api/trello/cards/addcomment";
+    var xhttp4 = new XMLHttpRequest();
+    xhttp4.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var obj = JSON.parse(this.responseText);
+            console.log(obj);
+            alert("comentário adicionado");
+
+
+
+        } else if (this.readyState == 4 && this.status == 400) {
+            alert("Erro ao criar comentário");
+        }
+    }
+    xhttp4.open("POST", url4, true);
+    xhttp4.setRequestHeader("Content-type", "application/json");
+    xhttp4.send(JSON.stringify(novoComentario));
 
 }
