@@ -226,7 +226,7 @@
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Alterar Nome do Quadro</h5>
+                                <h5 class="modal-title">Menu de Listas</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -234,13 +234,18 @@
                             <div class="modal-body">
             
             
-                                <form id="formOptListas" method="post" class="form-group">
+                                <form id="formRenomearLista" method="post" class="form-group">
+                                    <h6>Renomear Lista</h6>
                                     <input id="novoNomeLista" type="text" class="form-control" name="Etiqueta" />
                                     <button id="confirmaNomeLista"class="btn btn-success" type="submit">Confirmar</button>
 
-                                    <h5>Exluir Lista?</h5>
-                                    <button id="excluirLista" class="btn btn-success" type="submit">Excluir lista?</button>
+
             
+                                </form>
+
+                                <form id="formExcluirLista" method="post" class="form-group">
+                                    <h6>Excluir Lista?</h6>
+                                    <button id="excluirLista" class="btn btn-success" type="submit">Excluir</button>
                                 </form>
             
             
