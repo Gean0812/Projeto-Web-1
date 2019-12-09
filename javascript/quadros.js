@@ -86,6 +86,7 @@ var formRenomearLista = document.getElementById("formRenomearLista");
 var formExcluirLista = document.getElementById("formExcluirLista"); 
 var novoListaNome = document.getElementById("novoNomeLista");
 var comentarioCard = document.getElementById("comentarioCard");
+var formComentario = document.getElementById("formComentario");
 
 
 //VARIÁVEIS DO CARD
@@ -144,6 +145,18 @@ formCard.addEventListener("submit",function(e){
  formExcluirLista.addEventListener("submit",function(e){
      e.preventDefault();
      removerLista();
+ })
+
+ comentarioCard.addEventListener("keydown",function(e){
+    if(e.keyCode==13){
+        inserirComentario(document.querySelector(['idDoCard']).getAttibute('idDoCard'),this.value);
+      
+
+    }
+ })
+
+ formComentario.addEventListener("submit",function(e){
+     e.preventDefault();
  })
 
 
@@ -468,6 +481,12 @@ function exibirCard(element, card){
 
     novoCard.addEventListener("click",function(){
         alterarModalCard(card);
+        let infoCard = {
+            "id": card.id,
+            "data": card.data,
+            "name":card.name  
+        } 
+        sessionStorage.setItem("infoCard",JSON.stringify(infoCard));
 
 
     });
@@ -493,11 +512,11 @@ function alterarModalCard(card){
 
 }
 
-function inserirComentario(){
+function inserirComentario(card,comentarioCard){
 
       let novoComentario = {
-        "card_id" : modalCard.id,
-        "comment" : comentarioCard.value,
+        "card_id" : card,
+        "comment" : comentarioCard,
         "token": token
 
       }
