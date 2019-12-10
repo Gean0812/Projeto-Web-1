@@ -87,6 +87,8 @@ var formExcluirLista = document.getElementById("formExcluirLista");
 var novoListaNome = document.getElementById("novoNomeLista");
 var comentarioCard = document.getElementById("comentarioCard");
 var formComentario = document.getElementById("formComentario");
+var infoCard = JSON.parse(sessionStorage.getItem("infoCard"));
+var lugarComents = document.getElementById("lugar-para-exibir-comentarios");
 
 
 //VARIÁVEIS DO CARD
@@ -97,6 +99,7 @@ var cardDesc = document.getElementById("cardDesc");
 var cardData = document.getElementById("cardData");
 var listaInfo;
 var arrayDeCards;
+var arrayDeComentarios;
 
 //=======================================================================================================
 
@@ -149,7 +152,7 @@ formCard.addEventListener("submit",function(e){
 
  comentarioCard.addEventListener("keydown",function(e){
     if(e.keyCode==13){
-        inserirComentario(document.querySelector(['idDoCard']).getAttibute('idDoCard'),this.value);
+        inserirComentario(document.querySelector('[idDoCard]').getAttribute('idDoCard'),this.value);
       
 
     }
@@ -479,14 +482,18 @@ function exibirCard(element, card){
     novoCard.setAttribute("data-toggle", "modal");
     novoCard.setAttribute("data-target","#cardDentro");
 
+
+
     novoCard.addEventListener("click",function(){
         alterarModalCard(card);
+
         let infoCard = {
             "id": card.id,
             "data": card.data,
             "name":card.name  
         } 
         sessionStorage.setItem("infoCard",JSON.stringify(infoCard));
+
 
 
     });
@@ -507,6 +514,9 @@ function alterarModalCard(card){
     dataCard.innerText ="Data do Card: " + card.data;
 
 
+    listarComentarios();
+
+
     console.log(card);
 
 
@@ -521,10 +531,6 @@ function inserirComentario(card,comentarioCard){
 
       }
 
-      console.log(novoComentario);
-
-
-
     var url4 = "https://tads-trello.herokuapp.com/api/trello/cards/addcomment";
     var xhttp4 = new XMLHttpRequest();
     xhttp4.onreadystatechange = function () {
@@ -532,6 +538,14 @@ function inserirComentario(card,comentarioCard){
             var obj = JSON.parse(this.responseText);
             console.log(obj);
             alert("comentário adicionado");
+
+          
+
+           let li=document.createElement("li");
+           li.innerHTML=obj.comment;
+
+           lugarComents.appendChild(li);
+
 
 
 
@@ -542,5 +556,45 @@ function inserirComentario(card,comentarioCard){
     xhttp4.open("POST", url4, true);
     xhttp4.setRequestHeader("Content-type", "application/json");
     xhttp4.send(JSON.stringify(novoComentario));
+
+}
+
+
+function listarComentarios(infoCard){
+
+    var url4 = "https://tads-trello.herokuapp.com/api/trello/cards/"+token +infoCard.id+ "/comments";
+    var xhttp4 = new XMLHttpRequest();
+    xhttp4.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            arrayDeComentarios= JSON.parse(this.responseText);
+
+
+            
+            let li = document.createElement("li");
+            lugarComents.innerHTML = "";
+
+            for (let index = 0; index <arrayDeComentarios.length; index++) {
+
+                let novoComent = arrayDeComentarios[index].name+arrayDeComentarios[index].infoCard.id;
+                li.innerHTML = novoComent.comment;
+
+                
+    
+                lugarComents.appendChild(li);
+
+               
+ 
+            }
+
+
+
+
+        } else if (this.readyState == 4 && this.status == 400) {
+            alert("Erro ao exibir comentário");
+        }
+    }
+    xhttp4.open("POST", url4, true);
+    xhttp4.setRequestHeader("Content-type", "application/json");
+    xhttp4.send(JSON.stringify(url4));
 
 }
