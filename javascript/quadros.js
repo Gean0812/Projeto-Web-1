@@ -87,7 +87,15 @@ var formExcluirLista = document.getElementById("formExcluirLista");
 var novoListaNome = document.getElementById("novoNomeLista");
 var comentarioCard = document.getElementById("comentarioCard");
 var formComentario = document.getElementById("formComentario");
+var novaDataDoCard = document.getElementById("dataCard");
+var formNovaDataCard = document.getElementById("cardInfoData");
+var btnRemoverCard = document.getElementById("removerCard");
+var novoNomeCard = document.getElementById("novoNomeCard");
+
+
 var idCard = JSON.parse(sessionStorage.getItem("infoCard"));
+
+
 var lugarComents = document.getElementById("lugar-para-exibir-comentarios");
 
 
@@ -160,6 +168,24 @@ formCard.addEventListener("submit",function(e){
 
  formComentario.addEventListener("submit",function(e){
      e.preventDefault();
+ })
+
+ formNovaDataCard.addEventListener("submit",function(e){
+     e.preventDefault();
+     mudarDataCard();
+ })
+
+ btnRemoverCard.addEventListener("click",function(e){
+     e.preventDefault();
+     deletarCard();
+
+ })
+
+ novoNomeCard.addEventListener("keydown",function(e){
+     if(e.keyCode==13){
+        renomearCard();
+
+     }
  })
 
 
@@ -492,7 +518,7 @@ function exibirCard(element, card){
         } 
         sessionStorage.setItem("infoCard",JSON.stringify(infoCard));
 
-        listarComentarios(idCard);
+        listarComentarios(card);
 
 
 
@@ -564,13 +590,16 @@ function listarComentarios(idCard){
 
             arrayDeComentarios= JSON.parse(this.responseText);
 
-            let li = document.createElement("li");
+           // console.log(idCard);
+
+
             lugarComents.innerHTML = "";
 
             for (let index = 0; index <arrayDeComentarios.length; index++) {
 
-                let novoComent = arrayDeComentarios[index].name+ arrayDeComentarios[index].id;
-                li.innerHTML = novoComent.comment;
+                let novoComent = arrayDeComentarios[index].comment;
+                let li = document.createElement("li");
+                li.innerHTML = novoComent;
 
                 lugarComents.appendChild(li);
 
@@ -580,7 +609,7 @@ function listarComentarios(idCard){
             alert("Erro ao exibir comentário");
         }
     }
-    xhttp4.open("POST", url4, true);
+    xhttp4.open("GET", url4, true);
     xhttp4.setRequestHeader("Content-type", "application/json");
     xhttp4.send(JSON.stringify(url4));
 
@@ -591,12 +620,12 @@ function mudarDataCard(){
 
     let novaData = {
         "token" : token,
-        "card_id" : novoNomeBoard.value,
-        "data": token
+        "card_id" : idCard.id,
+        "data": novaDataDoCard.value
 
     }
 
-    console.log(newNome);
+    console.log(novaData);
 
     var url = "https://tads-trello.herokuapp.com/api/trello/cards/newdata";
     var xhttp = new XMLHttpRequest();
@@ -604,7 +633,8 @@ function mudarDataCard(){
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
 
-            window.location = "paginainicial.html";
+            alert("Data do card alterada!");
+            window.location.reload();
 
 
         } else if (this.readyState == 4 && this.status == 400) {
@@ -614,5 +644,71 @@ function mudarDataCard(){
     xhttp.open("PATCH", url, true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify(novaData));
+
+}
+
+
+function deletarCard(){
+
+    let removeCard = {
+        "card_id" : idCard.id,
+        "token" : token
+    }
+    let remover = confirm("Deseja excluir o card?");
+            
+    if(remover == true){
+
+        var url2 = " https://tads-trello.herokuapp.com/api/trello/cards/delete";
+        var xhttp2 = new XMLHttpRequest();
+        xhttp2.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("Card removido!");
+                window.location.reload();
+    
+    
+    
+    
+            } else if (this.readyState == 4 && this.status == 400) {
+               
+            }
+        }
+        xhttp2.open("DELETE", url2, true);
+        xhttp2.setRequestHeader("Content-type", "application/json");
+        xhttp2.send(JSON.stringify(removeCard));
+
+
+
+    }
+
+}
+
+
+function renomearCard (){
+
+    let newNomeCard = {
+        "token" : token,
+        "card_id" : idCard.id,
+        "name": novoNomeCard.value
+    }
+
+
+    var url = "https://tads-trello.herokuapp.com/api/trello/cards/rename";
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+
+            alert("card renomeado");
+            window.location.reload();
+
+
+        } else if (this.readyState == 4 && this.status == 400) {
+            alert("Erro");
+        }
+    }
+    xhttp.open("PATCH", url, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(newNomeCard));
+
 
 }
