@@ -87,7 +87,7 @@ var formExcluirLista = document.getElementById("formExcluirLista");
 var novoListaNome = document.getElementById("novoNomeLista");
 var comentarioCard = document.getElementById("comentarioCard");
 var formComentario = document.getElementById("formComentario");
-var infoCard = JSON.parse(sessionStorage.getItem("infoCard"));
+var idCard = JSON.parse(sessionStorage.getItem("infoCard"));
 var lugarComents = document.getElementById("lugar-para-exibir-comentarios");
 
 
@@ -482,8 +482,6 @@ function exibirCard(element, card){
     novoCard.setAttribute("data-toggle", "modal");
     novoCard.setAttribute("data-target","#cardDentro");
 
-
-
     novoCard.addEventListener("click",function(){
         alterarModalCard(card);
 
@@ -494,11 +492,15 @@ function exibirCard(element, card){
         } 
         sessionStorage.setItem("infoCard",JSON.stringify(infoCard));
 
+        listarComentarios(idCard);
+
 
 
     });
 
 }
+
+
 
 
 function alterarModalCard(card){
@@ -512,10 +514,6 @@ function alterarModalCard(card){
 
     var dataCard = document.getElementById("exibirDataAtual");
     dataCard.innerText ="Data do Card: " + card.data;
-
-
-    listarComentarios();
-
 
     console.log(card);
 
@@ -546,9 +544,6 @@ function inserirComentario(card,comentarioCard){
 
            lugarComents.appendChild(li);
 
-
-
-
         } else if (this.readyState == 4 && this.status == 400) {
             alert("Erro ao criar comentário");
         }
@@ -560,34 +555,26 @@ function inserirComentario(card,comentarioCard){
 }
 
 
-function listarComentarios(infoCard){
+function listarComentarios(idCard){
 
-    var url4 = "https://tads-trello.herokuapp.com/api/trello/cards/"+token +infoCard.id+ "/comments";
+    var url4 = "https://tads-trello.herokuapp.com/api/trello/cards/"+token +"/"+ idCard.id+ "/comments";
     var xhttp4 = new XMLHttpRequest();
     xhttp4.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+
             arrayDeComentarios= JSON.parse(this.responseText);
 
-
-            
             let li = document.createElement("li");
             lugarComents.innerHTML = "";
 
             for (let index = 0; index <arrayDeComentarios.length; index++) {
 
-                let novoComent = arrayDeComentarios[index].name+arrayDeComentarios[index].infoCard.id;
+                let novoComent = arrayDeComentarios[index].name+ arrayDeComentarios[index].id;
                 li.innerHTML = novoComent.comment;
 
-                
-    
                 lugarComents.appendChild(li);
 
-               
- 
             }
-
-
-
 
         } else if (this.readyState == 4 && this.status == 400) {
             alert("Erro ao exibir comentário");
@@ -596,5 +583,36 @@ function listarComentarios(infoCard){
     xhttp4.open("POST", url4, true);
     xhttp4.setRequestHeader("Content-type", "application/json");
     xhttp4.send(JSON.stringify(url4));
+
+}
+
+
+function mudarDataCard(){
+
+    let novaData = {
+        "token" : token,
+        "card_id" : novoNomeBoard.value,
+        "data": token
+
+    }
+
+    console.log(newNome);
+
+    var url = "https://tads-trello.herokuapp.com/api/trello/cards/newdata";
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+
+            window.location = "paginainicial.html";
+
+
+        } else if (this.readyState == 4 && this.status == 400) {
+            alert("Erro");
+        }
+    }
+    xhttp.open("PATCH", url, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(novaData));
 
 }
