@@ -117,6 +117,9 @@ var idCard = JSON.parse(sessionStorage.getItem("infoCard"));
 //lugar para exibir os comentários
 var lugarComents = document.getElementById("lugar-para-exibir-comentarios");
 
+//variavel do botao logout
+var logout = document.getElementById("btnLogout");
+
 
 //VARIÁVEIS DO CARD
 
@@ -131,17 +134,14 @@ var arrayDeComentarios;
 //=======================================================================================================
 
 //EVENT LISTENNERS
-// novaLista.addEventListener("click", function () {
-
-//     exibirForm.style.display = "block";
 
 
-// })
-
-// btnCancelar.addEventListener("click", function (e) {
-//     e.preventDefault();
-//     exibirForm.style.display = "none";
-// })
+//sair da Conta
+logout.addEventListener("click", function(){
+    sessionStorage.removeItem("token");
+    localStorage.removeItem("token");
+    window.location = "../html/index.html";
+});
 
 formLista.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -180,6 +180,7 @@ formExcluirLista.addEventListener("submit", function (e) {
 comentarioCard.addEventListener("keydown", function (e) {
     if (e.keyCode == 13) {
         inserirComentario(document.querySelector('[idDoCard]').getAttribute('idDoCard'), this.value);
+        this.value = "";
 
 
     }
@@ -608,9 +609,8 @@ function inserirComentario(card, comentarioCard) {
             console.log(obj);
             alert("comentário adicionado");
 
-
-
             let li = document.createElement("li");
+            li.setAttribute("class", "list-group-item");
             li.innerHTML = obj.comment;
 
             lugarComents.appendChild(li);
@@ -634,22 +634,15 @@ function listarComentarios(idCard) {
         if (this.readyState == 4 && this.status == 200) {
 
             arrayDeComentarios = JSON.parse(this.responseText);
-
-            // console.log(idCard);
-
-
             lugarComents.innerHTML = "";
-
             for (let index = 0; index < arrayDeComentarios.length; index++) {
 
                 let novoComent = arrayDeComentarios[index].comment;
                 let li = document.createElement("li");
+                li.setAttribute("class", "list-group-item");
                 li.innerHTML = novoComent;
-
                 lugarComents.appendChild(li);
-
             }
-
         } else if (this.readyState == 4 && this.status == 400) {
             alert("Erro ao exibir comentário");
         }
@@ -767,6 +760,7 @@ function renomearCard() {
 //Funçao para criar uma tag dentro do card
 function criarTag(tag) {
 
+    console.log(idCard);
     let novaTag = {
 
         "card_id": idCard.id,
@@ -805,17 +799,21 @@ function exibirTags(idCard){
         if (this.readyState == 4 && this.status == 200) {
 
             arrayDeTags = JSON.parse(this.responseText);
-
+            console.log(arrayDeTags)
             listaTags.innerHTML = "";
 
             for (let index = 0; index <arrayDeTags.length; index++) {
 
-                let novTag = arrayDeTags[index].color;
-
+                let li = document.createElement("li");
+                li.style.width = "3rem";
+                li.style.height ="2rem";
+                li.setAttribute("class", "p-0 list-inline-item m-1")
                 let div = document.createElement("div");
-                div.style.backgroundColor= novTag;
+                div.setAttribute("class", "w-100 h-100 rounded");
+                div.style.backgroundColor = arrayDeTags[index].color
+                li.appendChild(div);
 
-                listaTags.appendChild(div);
+                listaTags.appendChild(li);
 
             }
 
