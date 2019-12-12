@@ -57,3 +57,42 @@ a{
 #aNome{
     border: none;
 }
+
+
+.t-modal .modal-content{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    border-bottom: 3px solid transparent;
+    
+}
+
+.t-modal .modal-header{
+    padding: 30px 15px;
+
+}
+
+.t-modal .modal-title,
+.t-modal .close{
+    color: #fff;
+}
+
+
+.t-modal .modal-title{
+    text-transform: uppercase;
+    font-size: 30px;
+}
+
+.t-modal.primary .modal-content{
+
+    border-color:#34495e ;
+
+}
+
+.t-modal.primary .modal-header{
+    background-color: #34495e;
+
+} 

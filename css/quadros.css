@@ -11,12 +11,12 @@ a{
 }
 
 #criarListas{
-
+    display: none;
 }
 
 .card{
     width: 20px;
-
+   
 }
 
 .spn-list{
@@ -27,4 +27,76 @@ a{
 .row{
     color: white;
 }
+
+.t-modal .modal-content{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    border-bottom: 3px solid transparent;
+    
+}
+
+.t-modal .modal-header{
+    padding: 30px 15px;
+
+}
+
+.t-modal .modal-title,
+.t-modal .close{
+    color: #fff;
+}
+
+
+.t-modal .modal-title{
+    text-transform: uppercase;
+    font-size: 30px;
+}
+
+.t-modal.primary .modal-content{
+
+    border-color:#34495e ;
+
+}
+
+.t-modal.primary .modal-header{
+    background-color: #34495e;
+
+} 
+
+.t-modal.china .modal-content{
+
+    border-color:#ff4757 ;
+
+}
+
+.t-modal.china .modal-header{
+    background-color: #ff4757;
+
+} 
+
+.t-modal.azul .modal-content{
+
+    border-color:#17c0eb ;
+
+}
+
+.t-modal.azul .modal-header{
+    background-color: #17c0eb;
+
+} 
+
+.t-modal.aussie .modal-content{
+
+    border-color:#6ab04c ;
+
+}
+
+.t-modal.aussie .modal-header{
+    background-color: #6ab04c;
+
+} 
+
 
