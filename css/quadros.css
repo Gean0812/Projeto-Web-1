@@ -6,17 +6,23 @@ a{
     color: white !important;
 }
 
-#novoNome {
-
-}
 
 #criarListas{
     display: none;
 }
 
-.card{
+/* .card{
     width: 20px;
    
+} */
+
+/* .card-teste {
+    width: 20px !important;
+    height: 20px !important;
+} */
+
+.li-teste{
+    background-color: transparent !important;
 }
 
 .spn-list{

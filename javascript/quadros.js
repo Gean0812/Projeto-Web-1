@@ -7,11 +7,11 @@ class Lista {
     iniciar() {
 
         let div = document.createElement("div");
-        div.setAttribute("class", "card mh-50 col-3 p-0 bg-secondary m-2");
+        div.setAttribute("class", "card mh-50 col-3 p-0 bg-secondary mt-1 mx-2");
         div.setAttribute("id", " ");
 
-        let div2 = document.createElement("div2");
-        div2.setAttribute("class", "card myCard p-0 spn-list");
+        let div2 = document.createElement("ul");
+        div2.setAttribute("class", "list-group p-0 spn-list w-100 bg-transparent");
         div2.setAttribute("style", "width: 15rem;");
         div2.setAttribute("id", this.id);
 
@@ -30,7 +30,7 @@ class Lista {
 
 
         let btnCard = document.createElement("div");
-        btnCard.setAttribute("class", "card text-white bg-info mb-3");
+        btnCard.setAttribute("class", "h-100 w-100 text-white bg-info col-12");
         btnCard.setAttribute("style", "width: 15rem;");
         btnCard.setAttribute("id", " ");
         btnCard.setAttribute("data-toggle", "modal");
@@ -45,6 +45,8 @@ class Lista {
 
         let texto = document.createTextNode(this.listName);
         let textoCard = document.createTextNode("+add novo card");
+        let li = document.createElement("li");
+        li.setAttribute("class","list-group-item p-0 m-0 mb-1 li-teste");
 
 
 
@@ -52,7 +54,9 @@ class Lista {
         btnCard.appendChild(textoCard);
         div2.appendChild(spam);
         div.appendChild(div2);
-        div.appendChild(btnCard);
+        li.appendChild(btnCard);
+        div.appendChild(li);
+        
 
 
 
@@ -540,18 +544,27 @@ function mudarCor() {
 function exibirCard(element, card) {
 
     let novoCard = document.createElement("div");
-    novoCard.setAttribute("class", "card text-white bg-dark mb-3");
-    novoCard.setAttribute("style", "width: 15rem;");
+    novoCard.setAttribute("class", "h-100 w-100 text-white bg-dark mb-1 col-12");
+   // novoCard.setAttribute("style", "width: 15rem;");
     novoCard.setAttribute("id", card.id);
 
     var spamCard = document.createElement("span");
     spamCard.innerHTML = card.name;
 
+    let li = document.createElement("li");
+    li.setAttribute("class","list-group-item p-0 m-0")
+
+    
     novoCard.appendChild(spamCard);
-    element.insertAdjacentElement("afterend", novoCard);
+    li.appendChild(novoCard);
+    element.appendChild(li);
 
     novoCard.setAttribute("data-toggle", "modal");
     novoCard.setAttribute("data-target", "#cardDentro");
+
+
+
+
 
     novoCard.addEventListener("click", function () {
         alterarModalCard(card);
@@ -792,6 +805,8 @@ function criarTag(tag) {
 //Funçoes para exibir as Tags de um card
 
 function exibirTags(idCard){
+
+    console.log(idCard.id);
 
     var url4 = "https://tads-trello.herokuapp.com/api/trello/cards/"+token+"/"+idCard.id+"/tags";
     var xhttp4 = new XMLHttpRequest();
