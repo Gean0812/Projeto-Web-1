@@ -23,12 +23,15 @@
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-item nav-link active" href="../html/paginaInicial.html">Início
                     <span class="sr-only">(current)</span>
                 </a>
-                <a class="nav-item nav-link" href="#">Logout</a>
+                <a class="nav-item nav-link" href="#" id="btnLogout">Logout</a>
+
+               
             </div>
         </div>
     </nav>
@@ -55,7 +58,7 @@
     </div>
 
     <!--Modal para criar as listas -->
-    <div class="modal modal-fade" tabindex="-1" role="dialog" id="modalListas">
+    <div class="modal t-modal primary modal-fade" tabindex="-1" role="dialog" id="modalListas">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -69,6 +72,7 @@
 
                     <form id="formNovaLista" method="post" class="form-group">
                         <input class="form-control" id="listaDesc" type="text" name="">
+                        <p></p>
                         <button id="enviarLista" class="btn btn-success" type="submit">Criar Lista</button>
 
                     </form>
@@ -86,11 +90,11 @@
 
 
     <!--Modal para criar os cards -->
-    <div class="modal modal-fade" tabindex="-1" role="dialog" id="modalCards">
+    <div class="modal t-modal aussie modal-fade" tabindex="-1" role="dialog" id="modalCards">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">NovoCard</h5>
+                    <h5 class="modal-title">Novo Card</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -99,8 +103,10 @@
 
 
                     <form id="formNovoCard" method="post" class="form-group">
-                        <input class="form-control" id="cardDesc" type="text" name="" required>
+                        <input placeholder="Nome do Card" class="form-control" id="cardDesc" type="text" name="" required>
+                        <p></p>
                         <input class="form-control" id="cardData" type="date" required>
+                        <p></p>
                         <button id="enviarCard" class="btn btn-success" type="submit">Criar Card</button>
 
                     </form>
@@ -118,7 +124,7 @@
 
 
     <!--Modal para mudar a cor do board -->
-    <div class="modal modal-fade" tabindex="-1" role="dialog" id="mudarCor">
+    <div class="modal t-modal primary modal-fade" tabindex="-1" role="dialog" id="mudarCor">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -132,6 +138,7 @@
 
                     <form id="formNovaCor" method="post" class="form-group">
                         <input id="colorQuadro" type="color" class="form-control" name="Etiqueta" />
+                        <p></p>
                         <button id="novaCor" class="btn btn-success" type="submit">Mudar Cor</button>
 
                     </form>
@@ -148,7 +155,7 @@
 
 
     <!--Modal para entrar no card-->
-    <div class="modal modal-fade" tabindex="-1" role="dialog" id="cardDentro" idDoCard="">
+    <div class="modal t-modal china modal-fade" tabindex="-1" role="dialog" id="cardDentro" idDoCard="">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -161,10 +168,23 @@
 
                     <h6>Deletar card?</h6>
                     <button id="removerCard" class="btn btn-primary">Deletar Card</button>
+                    <p></p>
+                    <div class="d-flex justify-content-start mt-3">
+                        <span>Tags:</span>
+                        <ul id="lugar-para-exibir-tags" class=" list-inline"></ul>
+                    </div>
+                    <p></p>
+                    <div>
+                        <h6>Comentários:</h6>
+                    </div>
+                    <p></p>
+                    <ul class="list-group" id="lugar-para-exibir-comentarios"></ul>
+                    <p></p>
+
 
                     <h6>Renomear Card</h6>
-                    <input id="novoNomeCard" type="text" class="form-control">
-
+                    <input placeholder="Novo nome do card" id="novoNomeCard" type="text" class="form-control">
+                    <p></p>
 
                     <form id="cardInfoData" method="post" class="form-group">
                         <label class="" id="exibirDataAtual"></label>
@@ -175,26 +195,29 @@
                     </form>
 
                     <form id="formTags">
-                            <div class="dropdown show">
-                                    <h5>Inserir Etiqueta</h5>
-                                    <button id="tags" type="button" class="btn-secondary dropdown-toggle" href="#" role="button"
-                                        id="dropdownMenuLink" data-toggle="dropdown">Etiquetas</button>
-        
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <ul class="list-group">
-                                            <li class="list-group-item"> <button id="22" type="button" class="btn btn-danger"> </button>
-                                            </li>
-                                            <li class="list-group-item"> <button id="2" type="button" class="btn btn-info"> </button>
-                                            </li>
-                                            <li class="list-group-item"> <button id="32" type="button" class="btn btn-warning">
-                                                </button> </li>
-                                            <li class="list-group-item"> <button id="12" type="button" class="btn btn-success">
-                                                </button> </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                        <div class="dropdown show">
+                            <h5>Inserir Etiqueta</h5>
+                            <button id="tags" type="button" class="btn-secondary dropdown-toggle" href="#" role="button"
+                                id="dropdownMenuLink" data-toggle="dropdown">Etiquetas</button>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <ul class="list-group">
+                                    <li class="list-group-item"> <button id="22" type="button" class="btn btn-danger">
+                                        </button>
+                                    </li>
+                                    <li class="list-group-item"> <button id="2" type="button" class="btn btn-info">
+                                        </button>
+                                    </li>
+                                    <li class="list-group-item"> <button id="32" type="button" class="btn btn-warning">
+                                        </button> </li>
+                                    <li class="list-group-item"> <button id="12" type="button" class="btn btn-success">
+                                        </button> </li>
+                                </ul>
+                            </div>
+                        </div>
 
                     </form>
+                    <p></p>
 
                     <form id="formComentario">
                         <h5>Inserir comentário</h5>
@@ -202,24 +225,8 @@
 
                     </form>
 
-
-
                 </div>
                 <div class="modal-footer">
-
-                    <div id="lugar-para-exibir-tags" class="list-group">
-
-                    </div>
-
-                    <div id="">
-                        <ul class="list-group" id="lugar-para-exibir-comentarios">
-
-                        </ul>
-                    </div>
-
-
-
-
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 </div>
             </div>
@@ -228,7 +235,7 @@
 
 
     <!--Modal para mudar O NOME do board -->
-    <div class="modal modal-fade" tabindex="-1" role="dialog" id="mudarNome">
+    <div class="modal t-modal primary modal-fade" tabindex="-1" role="dialog" id="mudarNome">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -242,6 +249,7 @@
 
                     <form id="formNovoNome" method="post" class="form-group">
                         <input id="novoNomeQuadro" type="text" class="form-control" name="Etiqueta" />
+                        <p></p>
                         <button id="novoNomeBoard" class="btn btn-success" type="submit">Confirmar</button>
 
                     </form>
@@ -258,7 +266,7 @@
 
 
     <!--Modal para alterar nome ou excluir a LISTA -->
-    <div class="modal modal-fade" tabindex="-1" role="dialog" id="optListas">
+    <div class="modal t-modal azul modal-fade" tabindex="-1" role="dialog" id="optListas">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -272,8 +280,10 @@
 
                     <form id="formRenomearLista" method="post" class="form-group">
                         <h6>Renomear Lista</h6>
+                        <p></p>
                         <input id="novoNomeLista" type="text" class="form-control" name="Etiqueta" />
-                        <button id="confirmaNomeLista" class="btn btn-success" type="submit">Confirmar</button>
+                        <p></p>
+                        <button id="confirmaNomeLista" class="btn btn-success" type="submit">Renomear</button>
 
 
 
