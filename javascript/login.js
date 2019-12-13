@@ -69,6 +69,7 @@ formulario.addEventListener("submit", function (e) {
         if (this.readyState == 4 && this.status == 200) {
             var obj = JSON.parse(this.responseText);
             console.log(obj)
+            alert("Usuário cadastrado com sucesso!")
         } else if (this.readyState == 4 && this.status == 400) {
             alert("Usuário já cadastrado!");
 
@@ -80,6 +81,7 @@ formulario.addEventListener("submit", function (e) {
 })
 
 
+//Funçao para validar o Login
 function validarLogin() {
 
     var dados1 = {

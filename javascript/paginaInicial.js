@@ -89,7 +89,6 @@ console.log(token);
 
 criarQuadro.addEventListener("submit", function (e) {
     e.preventDefault();
-
     novoQuadro();
 
 })
@@ -107,7 +106,7 @@ function novoQuadro() {
     var dados2 = {
         "name": document.getElementById("nomeQuadro").value,
         "color": document.getElementById("colorQuadro").value,
-        "token": sessionStorage.getItem("token")
+        "token": token
     }
     console.log(dados2);
     var url2 = "https://tads-trello.herokuapp.com/api/trello/boards/new";

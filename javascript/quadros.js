@@ -773,6 +773,7 @@ function renomearCard() {
 //Funçao para criar uma tag dentro do card
 function criarTag(tag) {
 
+    idCard = JSON.parse(sessionStorage.getItem("infoCard"));
     console.log(idCard);
     let novaTag = {
 
@@ -781,6 +782,8 @@ function criarTag(tag) {
         "token": token
 
     }
+
+    console.log(novaTag);
 
 
     var url4 = "https://tads-trello.herokuapp.com/api/trello/cards/addtag";
